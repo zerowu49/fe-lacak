@@ -1,0 +1,7 @@
+{
+  "name": "LacakBarang",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
