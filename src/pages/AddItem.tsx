@@ -5,7 +5,7 @@ import './Page.css';
 
 const AddItem: React.FC = () => {
   const [color, setColor] = useState('')
-  const [weight, setWeight] = useState('')
+  const [weight, setWeight] = useState(0)
   const [condition, setCondition] = useState('')
 
   const [presentToast, dismissToast] = useIonToast();
@@ -24,7 +24,7 @@ const AddItem: React.FC = () => {
     if(color == ''){
       showToast("Please input the color of item","danger")
     }
-    else if(weight == ''){
+    else if(weight == 0){
       showToast("Please input the weight of item","danger")
     }
     else{
@@ -64,7 +64,7 @@ return (
           </div>
           <div className="form-group">
             <label>Weight</label>
-            <IonInput required type="text" value={weight} onIonChange={(e) => setWeight(e.detail.value!)} className="form-control mb-1"/>
+            <IonInput required type="text" value={weight} onIonChange={(e) => setWeight(e.detail.value! as unknown as number)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
             <label>Condition (Fresh/Not)</label>
