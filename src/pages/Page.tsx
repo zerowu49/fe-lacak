@@ -9,24 +9,24 @@ const Page: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>LacakBarang</IonTitle>
+          <IonTitle>LacakSayur</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent fullscreen>
         <div className="header text-center mb-4">
           <h4>Welcome To</h4>
-          <h1 className="mb-3">LacakBarang</h1>
+          <h1 className="mb-3">LacakSayur</h1>
           <h5><em>Powered by <strong>Hyperledger Fabric</strong></em></h5>
         </div>
         <div className="row">
           <div className="col"></div>
           <div className="col-8">
-            <p><em>LacakBarang</em> a general purpose supply chain solution built using the power of Blockchain Technology
+            <p><em>LacakSayur</em> a general purpose supply chain solution built using the power of Blockchain Technology
               which demonstrates with a simple web app. It maintains a distributed ledger that keep asset history with timestamped history
               detailing who handled the item. As ownership changes hands, distributed ledger will keep track the trace,
               providing an immutable auditable history.</p>
-            <p>To use <em>LacakBarang</em>, create an account using the link in the navbar above. Once logged in, you will
+            <p>To use <em>LacakSayur</em>, create an account using the link in the navbar above. Once logged in, you will
               be able to add new assets to the blockchain and track them with data like temperature or location. You will be
               able to authorize other "agents" on the blockchain to track this data as well, or even transfer ownership or
               possession of the asset entirely.</p>

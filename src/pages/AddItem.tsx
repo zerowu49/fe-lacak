@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { setTimeout } from 'timers';
 import './Page.css';
 
-const Login: React.FC = () => {
-  const [username, setUsername] = useState('')
-  const [pass, setPass] = useState('')
+const AddItem: React.FC = () => {
+  const [color, setColor] = useState('')
+  const [weight, setWeight] = useState('')
+  const [condition, setCondition] = useState('')
 
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
@@ -19,20 +20,20 @@ const Login: React.FC = () => {
     });
   };
 
-  const loginHandler = () => {
-    if(username == ''){
-      showToast("Please input your username","danger")
+  const submitHandler = () => {
+    if(color == ''){
+      showToast("Please input the color of item","danger")
     }
-    else if(pass == ''){
-      showToast("Please input your pass","danger")
+    else if(weight == ''){
+      showToast("Please input the weight of item","danger")
     }
     else{
       showLoader({
         message: 'Loading...',
         spinner: 'circular',
       })
-      console.info(username)
-      console.info(pass)
+      console.info(color)
+      console.info(weight)
       setTimeout(() => {
         hideLoader()
       }, 500);
@@ -46,29 +47,32 @@ return (
       <IonButtons slot="start">
         <IonMenuButton />
       </IonButtons>
-      <IonTitle>Login - LacakSayur</IonTitle>
+      <IonTitle>Add - LacakSayur</IonTitle>
     </IonToolbar>
   </IonHeader>
 
   <IonContent fullscreen>
     <div className="header text-center mb-4">
-      <h1 className="mb-3">Login</h1>
+      <h1 className="mb-3">Add Item</h1>
     </div>
     <div className="d-flex justify-content-center">
       <div className="login-form">
         <form>
           <div className="form-group">
-            <label>Username</label>
-            <IonInput required type="text" value={username} onIonChange={(e) => setUsername(e.detail.value!)} className="form-control mb-1"/>
+            <label>Color</label>
+            <IonInput required type="text" value={color} onIonChange={(e) => setColor(e.detail.value!)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
-            <label>Password</label>
-            <IonInput required type="password" value={pass} onIonChange={(e) => setPass(e.detail.value!)} className="form-control mb-1"/>
+            <label>Weight</label>
+            <IonInput required type="text" value={weight} onIonChange={(e) => setWeight(e.detail.value!)} className="form-control mb-1"/>
           </div>
-          <div className="container text-center">Or you can <a href="/signup">create a new Agent</a></div>
+          <div className="form-group">
+            <label>Condition (Fresh/Not)</label>
+            <IonInput required type="text" value={condition} onIonChange={(e) => setCondition(e.detail.value!)} className="form-control mb-1"/>
+          </div>
           <div className="form-group mt-2">
             <div className="row justify-content-center">
-              <IonButton onClick={loginHandler}>Login</IonButton>
+              <IonButton onClick={submitHandler}>Add Item</IonButton>
             </div>
           </div>
         </form>
@@ -79,4 +83,4 @@ return (
 );
 };
 
-export default Login;
+export default AddItem;

@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { peopleOutline, peopleSharp, pricetagOutline, pricetagSharp } from 'ionicons/icons';
+import { addOutline, addSharp, peopleOutline, peopleSharp, pricetagOutline, pricetagSharp } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -34,6 +34,12 @@ const appPages: AppPage[] = [
     iosIcon: peopleOutline,
     mdIcon: peopleSharp
   },
+  {
+    title: 'Add Items',
+    url: '/page/add',
+    iosIcon: addOutline,
+    mdIcon: addSharp
+  },
 ];
 
 const Menu: React.FC = () => {
@@ -43,7 +49,7 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" side="start">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>LacakBarang</IonListHeader>
+          <IonListHeader>LacakSayur</IonListHeader>
           <IonNote>Track your product faster</IonNote>
           {appPages.map((appPage, index) => {
             return (

@@ -9,7 +9,7 @@ return (
       <IonButtons slot="start">
         <IonMenuButton />
       </IonButtons>
-      <IonTitle>Products - LacakBarang</IonTitle>
+      <IonTitle>Products - LacakSayur</IonTitle>
     </IonToolbar>
   </IonHeader>
 

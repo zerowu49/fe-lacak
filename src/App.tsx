@@ -25,6 +25,7 @@ import './theme/variables.css';
 import Products from './pages/Products';
 import Agents from './pages/Agents';
 import Login from './pages/Login';
+import AddItem from './pages/AddItem';
 
 const App: React.FC = () => {
   return (
@@ -38,6 +39,7 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/page/products" component={Products}/>
             <Route exact path="/page/agents" component={Agents}/>
+            <Route exact path="/page/add" component={AddItem}/>
           </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
