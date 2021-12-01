@@ -1,7 +1,34 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBadge, IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
+import { useState } from 'react';
+import { data } from '../Footer';
 import './Page.css';
 
 const Products: React.FC = () => {
+  const [clicked, setClicked] = useState(false)
+
+  const [presentToast, dismissToast] = useIonToast();
+  const [showLoader, hideLoader] = useIonLoading();
+
+  const showToast = (msg: string, color: "danger" | "success") => {
+    presentToast({
+      buttons: [{ text: "Okay", handler: () => dismissToast() }],
+      color: color,
+      message: msg,
+      duration: 2000,
+    });
+  };
+
+  const clickHandler = () => {
+    showLoader({
+      message: 'Confirming...',
+      spinner: "circular",
+    })
+    setTimeout(() => {
+      hideLoader()
+      setClicked(!clicked)
+      showToast('Successfully confirm the transaction','success')
+    }, 3000);
+  }
 return (
 <IonPage>
   <IonHeader>
@@ -24,26 +51,30 @@ return (
             <tr>
               <th>UID</th>
               <th>Product Name</th>
-              <th>Added</th>
-              <th>Updated</th>
-              <th>Updates</th>
+              <th>Holder</th>
+              <th>Location</th>
+              <th>Amount</th>
+              <th>Confirm Section</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>7h15-45537-15-br173</td>
-              <td>Lightbulb</td>
-              <td>11/30/2021, 1:01:21 pm</td>
-              <td>11/30/2021, 10:20:04 pm</td>
-              <td>66</td>
-            </tr>
-            <tr>
-              <td>7h15-45537-f1135</td>
-              <td>Airliner</td>
-              <td>11/30/2021, 1:01:21 pm</td>
-              <td>11/30/2021, 10:20:04 pm</td>
-              <td>70</td>
-            </tr>
+            {data.map(d => {
+              return <tr>
+                <td>{d.id}</td>
+                <td>{d.name}</td>
+                <td>{d.holder}</td>
+                <td>{d.Location}</td>
+                <td>{d.amount}</td>
+                <td>
+                  {!d.isConfirm && !clicked ? 
+                    <IonButton onClick={clickHandler}>Confirm</IonButton> :
+                    <IonBadge color="success">
+                      Confirmed
+                    </IonBadge>
+                  }
+                </td>
+              </tr>
+            })}
           </tbody>
         </table>
       </div>

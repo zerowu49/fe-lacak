@@ -1,4 +1,6 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useState } from 'react';
+import { agent } from '../Footer';
 import './Page.css';
 
 const Agents: React.FC = () => {
@@ -23,29 +25,18 @@ return (
           <thead>
             <tr>
               <th>Name</th>
-              <th>Key</th>
-              <th>Owns</th>
-              <th>Custodian</th>
-              <th>Reports</th>
+              <th>Location</th>
+              <th>Item Hold</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><a href="#!/agents/02a39ebca172e654459ccc5cb87be82926a803221d1adc2a14477fc22033bc8ec5">Supply Chain
-                  Admin</a></td>
-              <td>02a39ebca172e654459ccc5cb87be...</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td><a href="#!/agents/03a06901f2c2ba089936cd402e9bb8b74d1b74b1bb81a55dcd480954f1914eedc8">Supply Chain
-                  Admin</a></td>
-              <td>03a06901f2c2ba089936cd402e9bb...</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
+            {agent.map(a => {
+              return <tr>
+                <td>{a.name}</td>
+                <td>{a.Location}</td>
+                <td>{a.item}</td>
+              </tr>
+            })}
           </tbody>
         </table>
       </div>
