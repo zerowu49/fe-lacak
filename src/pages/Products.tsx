@@ -1,13 +1,12 @@
 import { IonBadge, IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
-import { useState } from 'react';
-import { data } from '../Footer';
+import { useContext, useState } from 'react';
+import SupplyContext from '../data/supply-context';
 import './Page.css';
 
 const Products: React.FC = () => {
-  const [clicked, setClicked] = useState(false)
-
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
+  const supplyContext = useContext(SupplyContext)
 
   const showToast = (msg: string, color: "danger" | "success") => {
     presentToast({
@@ -25,10 +24,10 @@ const Products: React.FC = () => {
     })
     setTimeout(() => {
       hideLoader()
-      setClicked(!clicked)
       showToast('Successfully confirm the transaction','success')
     }, 3000);
   }
+
 return (
 <IonPage>
   <IonHeader>
@@ -51,22 +50,20 @@ return (
             <tr>
               <th>UID</th>
               <th>Product Name</th>
-              <th>Holder</th>
               <th>Location</th>
               <th>Condition</th>
               <th>Confirm Section</th>
             </tr>
           </thead>
           <tbody>
-            {data.map(d => {
+            {supplyContext.products.map(d => {
               return <tr>
                 <td>{d.id}</td>
                 <td>{d.name}</td>
-                <td>{d.holder}</td>
-                <td>{d.Location}</td>
+                <td>{d.location}</td>
                 <td>{d.condition}</td>
                 <td>
-                  {!d.isConfirm && !clicked ? 
+                  {!d.isConfirm ? 
                     <IonButton onClick={clickHandler}>Confirm</IonButton> :
                     <IonBadge color="success">
                       Confirmed

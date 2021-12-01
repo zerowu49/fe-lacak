@@ -4,8 +4,9 @@ import { setTimeout } from 'timers';
 import SupplyContext from '../data/supply-context';
 import './Page.css';
 import {nanoid} from 'nanoid'
+import { useParams } from 'react-router';
 
-const AddItem: React.FC = () => {
+const UpdateProduct: React.FC = () => {
   const [weight, setWeight] = useState(0)
   const [condition, setCondition] = useState('')
   const [location, setLocation] = useState('')
@@ -14,6 +15,8 @@ const AddItem: React.FC = () => {
 
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
+
+  const { id } = useParams<{id: string}>()
 
   const showToast = (msg: string, color: "danger" | "success") => {
     presentToast({
@@ -44,7 +47,6 @@ const AddItem: React.FC = () => {
         'condition': condition,
         'location': location,
         'name' : name,
-        'isConfirm': false,
       }
       supplyContext.addProduct(newProd)
       setTimeout(() => {
@@ -61,13 +63,13 @@ return (
       <IonButtons slot="start">
         <IonMenuButton />
       </IonButtons>
-      <IonTitle>Add - LacakSayur</IonTitle>
+      <IonTitle>Update - LacakSayur</IonTitle>
     </IonToolbar>
   </IonHeader>
 
   <IonContent fullscreen>
     <div className="header text-center mb-4">
-      <h1 className="mb-3">Add Item</h1>
+      <h1 className="mb-3">Update Product</h1>
     </div>
     <div className="d-flex justify-content-center">
       <div className="login-form">
@@ -101,4 +103,4 @@ return (
 );
 };
 
-export default AddItem;
+export default UpdateProduct;

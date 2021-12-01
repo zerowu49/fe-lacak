@@ -3,6 +3,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
+import { useContext, useEffect } from 'react';
+import SupplyContext from './data/supply-context';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -23,25 +25,32 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Products from './pages/Products';
+import UpdateProduct from './pages/UpdateProduct';
 import Agents from './pages/Agents';
 import Login from './pages/Login';
 import AddItem from './pages/AddItem';
+import SupplyContextProvider from './data/SupplyContextProvider';
 
 const App: React.FC = () => {
+  const productContext = useContext(SupplyContext)
+
   return (
     <IonApp>
-      <IonReactRouter>
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route exact path="/login" component={Login}/>
-            <Route path="/" exact={true}>
-              <Page />
-            </Route>
-            <Route exact path="/page/products" component={Products}/>
-            <Route exact path="/page/agents" component={Agents}/>
-            <Route exact path="/page/add" component={AddItem}/>
-          </IonRouterOutlet>
-      </IonReactRouter>
+      <SupplyContextProvider>
+        <IonReactRouter>
+            <Menu />
+            <IonRouterOutlet id="main">
+              <Route exact path="/login" component={Login}/>
+              <Route path="/" exact={true}>
+                <Page />
+              </Route>
+              <Route exact path="/page/products" component={Products}/>
+              <Route exact path="/page/agents" component={Agents}/>
+              <Route exact path="/page/add" component={AddItem}/>
+              <Route exact path="/page/edit/:id" component={UpdateProduct}/>
+            </IonRouterOutlet>
+        </IonReactRouter>
+      </SupplyContextProvider>
     </IonApp>
   );
 };
