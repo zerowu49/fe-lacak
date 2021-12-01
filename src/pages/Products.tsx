@@ -53,7 +53,7 @@ return (
               <th>Product Name</th>
               <th>Holder</th>
               <th>Location</th>
-              <th>Amount</th>
+              <th>Condition</th>
               <th>Confirm Section</th>
             </tr>
           </thead>
@@ -64,7 +64,7 @@ return (
                 <td>{d.name}</td>
                 <td>{d.holder}</td>
                 <td>{d.Location}</td>
-                <td>{d.amount}</td>
+                <td>{d.condition}</td>
                 <td>
                   {!d.isConfirm && !clicked ? 
                     <IonButton onClick={clickHandler}>Confirm</IonButton> :
