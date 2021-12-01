@@ -1,8 +1,8 @@
 export default interface Product {
-  id?: string
-  name?: string
-  amount?: number
-  condition?: string
-  location?: string
+  ID?: string
+  Name?: string
+  Amount?: number
+  Condition?: string
+  Location?: string
   isConfirm?: boolean
 }

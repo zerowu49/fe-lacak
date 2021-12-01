@@ -1,12 +1,48 @@
 import { IonBadge, IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SupplyContext from '../data/supply-context';
 import './Page.css';
+
+import Product from '../data/Product.model';
+
+import axios from 'axios';
 
 const Products: React.FC = () => {
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
-  const supplyContext = useContext(SupplyContext)
+  const supplyContext = useContext(SupplyContext)  
+  const [fetched, setFetched] = useState(false)  
+
+    useEffect(() => {
+      showLoader();
+
+      axios(
+        `http://localhost:3000/api/supplies`,
+        {
+          method: "get",
+          auth: {
+            username: 'admin',
+            password: 'admin'
+          }
+        }
+      ).then((res) => {
+        console.log(res.data);
+        if(!fetched){
+          for (const val in res.data) {
+            console.log(res.data[val].Record)
+            supplyContext.addProduct(res.data[val].Record)
+          }
+          setFetched(true)
+        }
+        hideLoader();
+      })
+      .catch((err) => {
+        console.log(err);
+        hideLoader();
+      });
+    }, [])
+
+
 
   const showToast = (msg: string, color: "danger" | "success") => {
     presentToast({
@@ -58,10 +94,10 @@ return (
           <tbody>
             {supplyContext.products.map(d => {
               return <tr>
-                <td>{d.id}</td>
-                <td>{d.name}</td>
-                <td>{d.location}</td>
-                <td>{d.condition}</td>
+                <td>{d.ID}</td>
+                <td>{d.Name}</td>
+                <td>{d.Location}</td>
+                <td>{d.Condition}</td>
                 <td>
                   {!d.isConfirm ? 
                     <IonButton onClick={clickHandler}>Confirm</IonButton> :

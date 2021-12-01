@@ -42,11 +42,11 @@ const UpdateProduct: React.FC = () => {
       console.info(name)
       console.info(weight)
       const newProd = {
-        'id': nanoid(),
-        'amount': weight,
-        'condition': condition,
-        'location': location,
-        'name' : name,
+        'ID': nanoid(),
+        'Amount': weight,
+        'Condition': condition,
+        'Location': location,
+        'Name' : name,
       }
       supplyContext.addProduct(newProd)
       setTimeout(() => {
