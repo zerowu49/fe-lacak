@@ -53,13 +53,13 @@ const Menu: React.FC = () => {
   if(supplyContext.user.username != undefined){
     console.info("ada")
     console.info(supplyContext.user.username)
-    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerLink="/profile" routerDirection="none" lines="none" detail={false}>
+    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerDirection="none" lines="none" detail={false}>
       <IonIcon slot="start" icon={personOutline}/>
       <IonLabel>{supplyContext.user.username}</IonLabel>
     </IonItem>
   }else{
     console.info("tdk")
-    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerLink="/profile" routerDirection="none" lines="none" detail={false}>
+    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerDirection="none" lines="none" detail={false}>
       <IonIcon slot="start" icon={personOutline}/>
       <IonLabel>Profile</IonLabel>
     </IonItem>

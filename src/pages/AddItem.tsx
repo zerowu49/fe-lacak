@@ -58,7 +58,7 @@ const Addproduct: React.FC = () => {
         'location': location,
         'name' : name,
         'owner': owner,
-        'isConfirm': false,
+        // 'confirm': false,
       }
 
       axios(productAdd, {
@@ -79,7 +79,7 @@ const Addproduct: React.FC = () => {
         showToast('Failed while adding new product','danger')
       })
 
-      supplyContext.addProduct(newProd)
+      // supplyContext.addProduct(newProd)
     }
   }
 

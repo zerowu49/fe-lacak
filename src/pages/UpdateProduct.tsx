@@ -47,6 +47,7 @@ const UpdateProduct: React.FC = () => {
         'Condition': condition,
         'Location': location,
         'Name' : name,
+        'Confirm': false,
       }
       supplyContext.addProduct(newProd)
       setTimeout(() => {
@@ -92,7 +93,7 @@ return (
           </div>
           <div className="form-group mt-2">
             <div className="row justify-content-center">
-              <IonButton onClick={submitHandler}>Add product</IonButton>
+              <IonButton onClick={submitHandler}>Update product</IonButton>
             </div>
           </div>
         </form>
