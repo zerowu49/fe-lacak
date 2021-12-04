@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './Page.css';
 import {nanoid} from 'nanoid'
 import axios from 'axios';
+import { registerUser } from '../data/Urls';
 
 const Register: React.FC = () => {
   const [user, setUser] = useState('')
@@ -20,14 +21,6 @@ const Register: React.FC = () => {
       duration: 2000,
     });
   };
-
-  const internal = true
-  let baseurl : string
-  if (internal) {
-    baseurl = 'http://192.168.18.33:3000/api/register-user'
-  } else {
-    baseurl = 'http://localhost:3000/api/register-user'
-  }
 
   const submitHandler = () => {
     if(user == ''){
@@ -52,7 +45,7 @@ const Register: React.FC = () => {
         'usertype': role,
       }
 
-      axios(baseurl, {
+      axios(registerUser, {
           method: "post",
           data: newProd,
           auth: {

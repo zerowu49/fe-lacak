@@ -2,6 +2,7 @@ import { IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, I
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Agent from '../data/Agent.model';
+import { agentList } from '../data/Urls';
 import './Page.css';
 
 const Agents: React.FC = () => {
@@ -10,19 +11,11 @@ const Agents: React.FC = () => {
   const [fetched, setFetched] = useState(false);
   const [users, setUsers] = useState<Array<Agent>>([]);
 
-  const internal = true
-  let baseurl : string
-  if (internal) {
-    baseurl = 'http://192.168.18.33:3000/api/users'
-  } else {
-    baseurl = 'http://localhost:3000/api/users'
-  }
-
   useEffect(() => {
     showLoader();
 
     axios(
-      baseurl,
+      agentList,
       {
         method: "get",
         auth: {
@@ -47,6 +40,20 @@ const Agents: React.FC = () => {
     });
   }, [])
 
+  let layout
+  if(users.length === 0){
+    layout = <tr>
+      <td colSpan={3} className="text-center">No agents found</td>
+    </tr>
+  }else{
+    layout = users.map(a => {
+      return <tr key={a.id}>
+        <td>{a.id}</td>
+        <td>{a.usertype}</td>
+      </tr>
+    })
+  }
+
 return (
 <IonPage>
   <IonHeader>
@@ -65,21 +72,12 @@ return (
     <div className="d-flex justify-content-center">
       <div className="col">
         <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Item Hold</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(a => {
-              return <tr>
-                <td>{a.id}</td>
-                <td>{a.usertype}</td>
-              </tr>
-            })}
-          </tbody>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Item Hold</th>
+          </tr>
+          {layout}
         </table>
       </div>
     </div>

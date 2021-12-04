@@ -6,26 +6,19 @@ import './Page.css';
 import Product from '../data/Product.model';
 
 import axios from 'axios';
+import { productList } from '../data/Urls';
 
 const Products: React.FC = () => {
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
   const supplyContext = useContext(SupplyContext);
   const [fetched, setFetched] = useState(false);
-  
-  const internal = true
-  let baseurl : string
-  if (internal) {
-    baseurl = 'http://192.168.18.33:3000/api/supplies'
-  } else {
-    baseurl = 'http://localhost:3000/api/supplies'
-  }
 
   useEffect(() => {
     showLoader();
 
     axios(
-      baseurl,
+      productList,
       {
         method: "get",
         auth: {
@@ -70,6 +63,30 @@ const Products: React.FC = () => {
     }, 3000);
   }
 
+  let layout
+  if(supplyContext.products.length === 0){
+    layout = <tr>
+      <td colSpan={5} className="text-center">No products found</td>
+    </tr>
+  }else{
+    layout = supplyContext.products.map(d => {
+      return <tr key={d.ID}>
+        <td>{d.ID}</td>
+        <td>{d.Name}</td>
+        <td>{d.Location}</td>
+        <td>{d.Condition}</td>
+        <td>
+          {!d.isConfirm ? 
+            <IonButton onClick={clickHandler}>Confirm</IonButton> :
+            <IonBadge color="success">
+              Confirmed
+            </IonBadge>
+          }
+        </td>
+      </tr>
+    })
+  }
+
 return (
 <IonPage>
   <IonHeader>
@@ -98,22 +115,7 @@ return (
             </tr>
           </thead>
           <tbody>
-            {supplyContext.products.map(d => {
-              return <tr>
-                <td>{d.ID}</td>
-                <td>{d.Name}</td>
-                <td>{d.Location}</td>
-                <td>{d.Condition}</td>
-                <td>
-                  {!d.isConfirm ? 
-                    <IonButton onClick={clickHandler}>Confirm</IonButton> :
-                    <IonBadge color="success">
-                      Confirmed
-                    </IonBadge>
-                  }
-                </td>
-              </tr>
-            })}
+            {layout}
           </tbody>
         </table>
       </div>
