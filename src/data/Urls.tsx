@@ -12,4 +12,5 @@ export const productHistory = baseurl + 'supply-history/'
 export const productTransfer = baseurl + 'transfer-supply'
 export const registerUser = baseurl + 'register-user'
 export const agentList = baseurl + 'users'
+export const confirm = baseurl + 'confirm'
 

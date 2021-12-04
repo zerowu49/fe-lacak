@@ -4,7 +4,7 @@ import SupplyContext from '../data/supply-context';
 import './Page.css';
 
 import axios from 'axios';
-import { productList } from '../data/Urls';
+import { productList, confirm } from '../data/Urls';
 import { readerOutline, swapHorizontalOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
@@ -18,7 +18,6 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     showLoader();
-
 
     if (!fetched) {
       axios(
@@ -58,15 +57,33 @@ const Products: React.FC = () => {
     });
   };
 
-  const clickHandler = () => {
+  const clickHandler = (id: string) => {
     showLoader({
       message: 'Confirming...',
       spinner: "circular",
     })
-    setTimeout(() => {
+
+    axios(confirm, {
+      method: "put",
+      data: {id: id},
+      auth: {
+        username: 'admin',
+        password: 'admin'
+      }
+    }).then((res) => {
+      console.info(res)
       hideLoader()
-      showToast('Successfully confirm the transaction','success')
-    }, 3000);
+      showToast('Successfully confirm the products','success')
+    }).catch((err) => {
+      console.error(err)
+      hideLoader()
+      showToast('Failed while confirm the products','danger')
+    })
+
+    // setTimeout(() => {
+    //   hideLoader()
+    //   showToast('Successfully confirm the transaction','success')
+    // }, 3000);
   }
 
   const transferHandler = (id: any) => {
@@ -97,7 +114,7 @@ const Products: React.FC = () => {
             <IonIcon icon={readerOutline}/>
           </IonButton>
           {!d.isConfirm ? 
-            <IonButton onClick={clickHandler}>Confirm</IonButton> :
+            <IonButton onClick={() => clickHandler(d.ID!)}>Confirm</IonButton> :
             <IonBadge color="success">
               Confirmed
             </IonBadge>
