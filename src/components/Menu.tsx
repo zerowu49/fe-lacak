@@ -8,11 +8,14 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
+  IonRouterLink,
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { addOutline, addSharp, peopleOutline, peopleSharp, pricetagOutline, pricetagSharp } from 'ionicons/icons';
+import { addOutline, addSharp, peopleOutline, peopleSharp, personOutline, pricetagOutline, pricetagSharp } from 'ionicons/icons';
 import './Menu.css';
+import { useContext } from 'react';
+import SupplyContext from '../data/supply-context';
 
 interface AppPage {
   url: string;
@@ -44,13 +47,32 @@ const appPages: AppPage[] = [
 
 const Menu: React.FC = () => {
   const location = useLocation();
+  const supplyContext = useContext(SupplyContext);
+
+  let layout
+  if(supplyContext.user.username != undefined){
+    console.info("ada")
+    console.info(supplyContext.user.username)
+    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerLink="/profile" routerDirection="none" lines="none" detail={false}>
+      <IonIcon slot="start" icon={personOutline}/>
+      <IonLabel>{supplyContext.user.username}</IonLabel>
+    </IonItem>
+  }else{
+    console.info("tdk")
+    layout = <IonItem className={location.pathname === "/profile" ? 'selected' : ''} routerLink="/profile" routerDirection="none" lines="none" detail={false}>
+      <IonIcon slot="start" icon={personOutline}/>
+      <IonLabel>Profile</IonLabel>
+    </IonItem>
+  }
 
   return (
     <IonMenu contentId="main" side="start">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>LacakSayur</IonListHeader>
-          <IonNote>Track your product faster</IonNote>
+          <IonRouterLink routerLink="/">
+            <IonListHeader>LacakSayur</IonListHeader>
+            <IonNote>Track your product faster</IonNote>
+          </IonRouterLink>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
@@ -61,6 +83,7 @@ const Menu: React.FC = () => {
               </IonMenuToggle>
             );
           })}
+          {layout}
         </IonList>
       </IonContent>
     </IonMenu>

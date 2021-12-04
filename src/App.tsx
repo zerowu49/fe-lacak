@@ -42,6 +42,7 @@ const App: React.FC = () => {
             <Menu />
             <IonRouterOutlet id="main">
               <Route exact path="/login" component={Login}/>
+              <Route exact path="/register" component={Register}/>
               <Route path="/" exact={true}>
                 <Page />
               </Route>
@@ -51,7 +52,6 @@ const App: React.FC = () => {
               <Route exact path="/page/agents" component={Agents}/>
               <Route exact path="/page/add" component={AddItem}/>
               <Route exact path="/page/edit/:id" component={UpdateProduct}/>
-              <Route exact path="/page/register" component={Register}/>
             </IonRouterOutlet>
         </IonReactRouter>
       </SupplyContextProvider>

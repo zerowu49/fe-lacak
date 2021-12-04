@@ -1,11 +1,13 @@
 import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { setTimeout } from 'timers';
+import SupplyContext from '../data/supply-context';
 import './Page.css';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('')
   const [pass, setPass] = useState('')
+  const supplyContext = useContext(SupplyContext);
 
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
@@ -33,9 +35,11 @@ const Login: React.FC = () => {
       })
       console.info(username)
       console.info(pass)
-      setTimeout(() => {
-        hideLoader()
-      }, 500);
+      let t 
+      t = supplyContext.storeUser(username,pass)
+      t = "SS"
+      console.log(t)
+      hideLoader()
     }
   }
 

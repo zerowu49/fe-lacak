@@ -19,30 +19,34 @@ const Products: React.FC = () => {
   useEffect(() => {
     showLoader();
 
-    axios(
-      productList,
-      {
-        method: "get",
-        auth: {
-          username: 'admin',
-          password: 'admin'
+
+    if (!fetched) {
+      axios(
+        productList,
+        {
+          method: "get",
+          auth: {
+            username: 'admin',
+            password: 'admin'
+          }
         }
-      }
-    ).then((res) => {
-      console.log(res.data);
-      if(!fetched){
-        for (const val in res.data) {
-          console.log(res.data[val].Record)
-          supplyContext.addProduct(res.data[val].Record)
+      ).then((res) => {
+        console.log(res.data);
+        if(!fetched){
+          for (const val in res.data) {
+            console.log(res.data[val].Record)
+            supplyContext.addProduct(res.data[val].Record)
+          }
+          setFetched(true)
         }
-        setFetched(true)
-      }
-      hideLoader();
-    })
-    .catch((err) => {
-      console.log(err);
-      hideLoader();
-    });
+        hideLoader();
+      })
+      .catch((err) => {
+        console.log(err);
+        hideLoader();
+      });
+    }
+
   }, [])
 
   const showToast = (msg: string, color: "danger" | "success") => {

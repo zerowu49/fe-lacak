@@ -75,7 +75,6 @@ return (
           <tr>
             <th>Name</th>
             <th>Type</th>
-            <th>Item Hold</th>
           </tr>
           {layout}
         </table>

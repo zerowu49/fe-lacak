@@ -1,18 +1,19 @@
 import React from "react"
 import Product from "./Product.model"
+import UserModel from "./User.model"
 
 const SupplyContext = React.createContext<{
     products: Product[];
-    username: string;
+    user: UserModel;
     getProduct: (id: string) => void;
-    storeName: (name: string) => void;
+    storeUser: (name: string,pass: string) => void;
     addProduct: (prod: Product) => void;
     logoutUser: () => void;
 }>({
     products: [],
-    username: '',
+    user: {username:'',password:''},
     getProduct: () => {},
-    storeName: () => {},
+    storeUser: () => {},
     addProduct: () => {},
     logoutUser: () => {},
 })
