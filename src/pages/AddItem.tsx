@@ -4,9 +4,11 @@ import { setTimeout } from 'timers';
 import SupplyContext from '../data/supply-context';
 import './Page.css';
 import {nanoid} from 'nanoid'
+import axios from 'axios';
 
 const AddItem: React.FC = () => {
-  const [weight, setWeight] = useState(0)
+  const [owner, setOwner] = useState('')
+  const [amount, setAmount] = useState(0)
   const [condition, setCondition] = useState('')
   const [location, setLocation] = useState('')
   const [name, setName] = useState('')
@@ -24,11 +26,19 @@ const AddItem: React.FC = () => {
     });
   };
 
+  const internal = true
+  let baseurl : string
+  if (internal) {
+    baseurl = 'http://192.168.18.33:3000/api/add-supply'
+  } else {
+    baseurl = 'http://localhost:3000/api/add-supply'
+  }
+
   const submitHandler = () => {
     if(name == ''){
       showToast("Please input the name of item","danger")
     }
-    else if(weight == 0){
+    else if(amount == 0){
       showToast("Please input the weight of item","danger")
     }
     else{
@@ -37,20 +47,37 @@ const AddItem: React.FC = () => {
         spinner: 'circular',
       })
       console.info(name)
-      console.info(weight)
+      console.info(amount)
+      const id = nanoid()
       const newProd = {
-        'id': nanoid(),
-        'amount': weight,
+        'id': id,
+        'amount': amount,
         'condition': condition,
         'location': location,
         'name' : name,
+        'owner': owner,
         'isConfirm': false,
       }
-      supplyContext.addProduct(newProd)
-      setTimeout(() => {
+
+      axios(baseurl, {
+          method: "post",
+          data: newProd,
+          auth: {
+            username: 'admin',
+            password: 'admin'
+          }
+        }
+      ).then((res) => {
+        console.info(res)
         hideLoader()
-        showToast('Successfully add new product','success')
-      }, 500);
+        showToast('Successfully added new product','success')
+      }).catch((err) => {
+        console.error(err)
+        hideLoader()
+        showToast('Failed while adding new product','danger')
+      })
+
+      supplyContext.addProduct(newProd)
     }
   }
 
@@ -73,12 +100,16 @@ return (
       <div className="login-form">
         <form>
           <div className="form-group">
-            <label>Name</label>
+            <label>Owner</label>
+            <IonInput required type="text" value={owner} onIonChange={(e) => setOwner(e.detail.value!)} className="form-control mb-1"/>
+          </div>
+          <div className="form-group">
+            <label>Vegetable Name</label>
             <IonInput required type="text" value={name} onIonChange={(e) => setName(e.detail.value!)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
             <label>Amount</label>
-            <IonInput required type="text" value={weight} onIonChange={(e) => setWeight(e.detail.value! as unknown as number)} className="form-control mb-1"/>
+            <IonInput required type="text" value={amount} onIonChange={(e) => setAmount(e.detail.value! as unknown as number)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
             <label>Location</label>

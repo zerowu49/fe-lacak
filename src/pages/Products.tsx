@@ -10,39 +10,45 @@ import axios from 'axios';
 const Products: React.FC = () => {
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
-  const supplyContext = useContext(SupplyContext)  
-  const [fetched, setFetched] = useState(false)  
+  const supplyContext = useContext(SupplyContext);
+  const [fetched, setFetched] = useState(false);
+  
+  const internal = true
+  let baseurl : string
+  if (internal) {
+    baseurl = 'http://192.168.18.33:3000/api/supplies'
+  } else {
+    baseurl = 'http://localhost:3000/api/supplies'
+  }
 
-    useEffect(() => {
-      showLoader();
+  useEffect(() => {
+    showLoader();
 
-      axios(
-        `http://localhost:3000/api/supplies`,
-        {
-          method: "get",
-          auth: {
-            username: 'admin',
-            password: 'admin'
-          }
+    axios(
+      baseurl,
+      {
+        method: "get",
+        auth: {
+          username: 'admin',
+          password: 'admin'
         }
-      ).then((res) => {
-        console.log(res.data);
-        if(!fetched){
-          for (const val in res.data) {
-            console.log(res.data[val].Record)
-            supplyContext.addProduct(res.data[val].Record)
-          }
-          setFetched(true)
+      }
+    ).then((res) => {
+      console.log(res.data);
+      if(!fetched){
+        for (const val in res.data) {
+          console.log(res.data[val].Record)
+          supplyContext.addProduct(res.data[val].Record)
         }
-        hideLoader();
-      })
-      .catch((err) => {
-        console.log(err);
-        hideLoader();
-      });
-    }, [])
-
-
+        setFetched(true)
+      }
+      hideLoader();
+    })
+    .catch((err) => {
+      console.log(err);
+      hideLoader();
+    });
+  }, [])
 
   const showToast = (msg: string, color: "danger" | "success") => {
     presentToast({

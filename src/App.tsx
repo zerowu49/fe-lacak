@@ -30,6 +30,7 @@ import Agents from './pages/Agents';
 import Login from './pages/Login';
 import AddItem from './pages/AddItem';
 import SupplyContextProvider from './data/SupplyContextProvider';
+import Register from './pages/Register';
 
 const App: React.FC = () => {
   const productContext = useContext(SupplyContext)
@@ -48,6 +49,7 @@ const App: React.FC = () => {
               <Route exact path="/page/agents" component={Agents}/>
               <Route exact path="/page/add" component={AddItem}/>
               <Route exact path="/page/edit/:id" component={UpdateProduct}/>
+              <Route exact path="/page/register" component={Register}/>
             </IonRouterOutlet>
         </IonReactRouter>
       </SupplyContextProvider>
