@@ -1,9 +1,9 @@
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import SupplyContext from './data/supply-context';
 
 /* Core CSS required for Ionic components to work properly */
@@ -31,10 +31,10 @@ import Login from './pages/Login';
 import AddItem from './pages/AddItem';
 import SupplyContextProvider from './data/SupplyContextProvider';
 import Register from './pages/Register';
+import HistoryProduct from './pages/HistoryProduct';
+import TransferProduct from './pages/TransferProduct';
 
 const App: React.FC = () => {
-  const productContext = useContext(SupplyContext)
-
   return (
     <IonApp>
       <SupplyContextProvider>
@@ -46,6 +46,8 @@ const App: React.FC = () => {
                 <Page />
               </Route>
               <Route exact path="/page/products" component={Products}/>
+              <Route exact path="/page/products/:id" component={HistoryProduct} />
+              <Route exact path="/page/products/trx/:id" component={TransferProduct} />
               <Route exact path="/page/agents" component={Agents}/>
               <Route exact path="/page/add" component={AddItem}/>
               <Route exact path="/page/edit/:id" component={UpdateProduct}/>

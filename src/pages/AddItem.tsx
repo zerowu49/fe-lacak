@@ -5,8 +5,9 @@ import SupplyContext from '../data/supply-context';
 import './Page.css';
 import {nanoid} from 'nanoid'
 import axios from 'axios';
+import { productAdd } from '../data/Urls';
 
-const AddItem: React.FC = () => {
+const Addproduct: React.FC = () => {
   const [owner, setOwner] = useState('')
   const [amount, setAmount] = useState(0)
   const [condition, setCondition] = useState('')
@@ -26,20 +27,21 @@ const AddItem: React.FC = () => {
     });
   };
 
-  const internal = true
-  let baseurl : string
-  if (internal) {
-    baseurl = 'http://192.168.18.33:3000/api/add-supply'
-  } else {
-    baseurl = 'http://localhost:3000/api/add-supply'
-  }
-
   const submitHandler = () => {
     if(name == ''){
-      showToast("Please input the name of item","danger")
+      showToast("Please input the name of product","danger")
     }
     else if(amount == 0){
-      showToast("Please input the weight of item","danger")
+      showToast("Please input the weight of product","danger")
+    }
+    else if(owner == ""){
+      showToast("Please input owner of product","danger")
+    }
+    else if(location == ""){
+      showToast("Please input location of product","danger")
+    }
+    else if(condition == ""){
+      showToast("Please input condition of product","danger")
     }
     else{
       showLoader({
@@ -59,7 +61,7 @@ const AddItem: React.FC = () => {
         'isConfirm': false,
       }
 
-      axios(baseurl, {
+      axios(productAdd, {
           method: "post",
           data: newProd,
           auth: {
@@ -94,7 +96,7 @@ return (
 
   <IonContent fullscreen>
     <div className="header text-center mb-4">
-      <h1 className="mb-3">Add Item</h1>
+      <h1 className="mb-3">Add product</h1>
     </div>
     <div className="d-flex justify-content-center">
       <div className="login-form">
@@ -109,7 +111,7 @@ return (
           </div>
           <div className="form-group">
             <label>Amount</label>
-            <IonInput required type="text" value={amount} onIonChange={(e) => setAmount(e.detail.value! as unknown as number)} className="form-control mb-1"/>
+            <IonInput required type="number" value={amount} onIonChange={(e) => setAmount(e.detail.value! as unknown as number)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
             <label>Location</label>
@@ -121,7 +123,7 @@ return (
           </div>
           <div className="form-group mt-2">
             <div className="row justify-content-center">
-              <IonButton onClick={submitHandler}>Add Item</IonButton>
+              <IonButton onClick={submitHandler}>Add product</IonButton>
             </div>
           </div>
         </form>
@@ -132,4 +134,4 @@ return (
 );
 };
 
-export default AddItem;
+export default Addproduct;

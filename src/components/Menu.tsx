@@ -35,7 +35,7 @@ const appPages: AppPage[] = [
     mdIcon: peopleSharp
   },
   {
-    title: 'Add Items',
+    title: 'Add products',
     url: '/page/add',
     iosIcon: addOutline,
     mdIcon: addSharp

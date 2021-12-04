@@ -4,5 +4,6 @@ export default interface Product {
   Amount?: number
   Condition?: string
   Location?: string
+  Owner?: string
   isConfirm?: boolean
 }

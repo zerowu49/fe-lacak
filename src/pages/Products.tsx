@@ -1,16 +1,18 @@
-import { IonBadge, IonButton, IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
+import { IonBadge, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading, useIonToast } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import SupplyContext from '../data/supply-context';
 import './Page.css';
 
-import Product from '../data/Product.model';
-
 import axios from 'axios';
 import { productList } from '../data/Urls';
+import { readerOutline, swapHorizontalOutline } from 'ionicons/icons';
+import { useHistory } from 'react-router';
+
 
 const Products: React.FC = () => {
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
+  const history = useHistory();
   const supplyContext = useContext(SupplyContext);
   const [fetched, setFetched] = useState(false);
 
@@ -63,6 +65,14 @@ const Products: React.FC = () => {
     }, 3000);
   }
 
+  const transferHandler = (id: any) => {
+    history.push('/page/products/trx/'+id)
+  }
+
+  const historyHandler = (id: any) => {
+    history.push('/page/products/'+id)
+  }
+
   let layout
   if(supplyContext.products.length === 0){
     layout = <tr>
@@ -71,11 +81,17 @@ const Products: React.FC = () => {
   }else{
     layout = supplyContext.products.map(d => {
       return <tr key={d.ID}>
-        <td>{d.ID}</td>
         <td>{d.Name}</td>
         <td>{d.Location}</td>
         <td>{d.Condition}</td>
+        <td>{d.Owner}</td>
         <td>
+          <IonButton onClick={() => transferHandler(d.ID)}>
+            <IonIcon icon={swapHorizontalOutline}/>
+          </IonButton>
+          <IonButton onClick={() => historyHandler(d.ID)}>
+            <IonIcon icon={readerOutline}/>
+          </IonButton>
           {!d.isConfirm ? 
             <IonButton onClick={clickHandler}>Confirm</IonButton> :
             <IonBadge color="success">
@@ -107,11 +123,11 @@ return (
         <table className="table">
           <thead>
             <tr>
-              <th>UID</th>
               <th>Product Name</th>
               <th>Location</th>
               <th>Condition</th>
-              <th>Confirm Section</th>
+              <th>Owner</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>

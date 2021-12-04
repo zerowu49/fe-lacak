@@ -29,10 +29,10 @@ const UpdateProduct: React.FC = () => {
 
   const submitHandler = () => {
     if(name == ''){
-      showToast("Please input the name of item","danger")
+      showToast("Please input the name of product","danger")
     }
     else if(weight == 0){
-      showToast("Please input the weight of item","danger")
+      showToast("Please input the weight of product","danger")
     }
     else{
       showLoader({
@@ -92,7 +92,7 @@ return (
           </div>
           <div className="form-group mt-2">
             <div className="row justify-content-center">
-              <IonButton onClick={submitHandler}>Add Item</IonButton>
+              <IonButton onClick={submitHandler}>Add product</IonButton>
             </div>
           </div>
         </form>
