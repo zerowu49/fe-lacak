@@ -58,7 +58,7 @@ const Addproduct: React.FC = () => {
         'location': location,
         'name' : name,
         'owner': owner,
-        // 'confirm': false,
+        'confirm': "false",
       }
 
       axios(productAdd, {
@@ -118,7 +118,7 @@ return (
             <IonInput required type="text" value={location} onIonChange={(e) => setLocation(e.detail.value!)} className="form-control mb-1"/>
           </div>
           <div className="form-group">
-            <label>Condition (Fresh/Not)</label>
+            <label>Condition</label>
             <IonInput required type="text" value={condition} onIonChange={(e) => setCondition(e.detail.value!)} className="form-control mb-1"/>
           </div>
           <div className="form-group mt-2">

@@ -10,6 +10,7 @@ import axios from 'axios';
 
 const TransferProduct: React.FC = () => {
   const [owner, setOwner] = useState('')
+  const [location, setLocation] = useState('')
 
   const [presentToast, dismissToast] = useIonToast();
   const [showLoader, hideLoader] = useIonLoading();
@@ -80,6 +81,10 @@ return (
           <div className="form-group">
             <label>New Owner</label>
             <IonInput required type="text" value={owner} onIonChange={(e) => setOwner(e.detail.value!)} className="form-control mb-1"/>
+          </div>
+          <div className="form-group">
+            <label>Location</label>
+            <IonInput required type="text" value={location} onIonChange={(e) => setLocation(e.detail.value!)} className="form-control mb-1"/>
           </div>
           <div className="form-group mt-2">
             <div className="row justify-content-center">

@@ -15,6 +15,7 @@ const Products: React.FC = () => {
   const history = useHistory();
   const supplyContext = useContext(SupplyContext);
   const [fetched, setFetched] = useState(false);
+  const [confirmData, setConfirmData] = useState<any[]>([])
 
   useEffect(() => {
     showLoader();
@@ -33,7 +34,6 @@ const Products: React.FC = () => {
         console.log(res.data);
         if(!fetched){
           for (const val in res.data) {
-            console.log(res.data[val].Record)
             supplyContext.addProduct(res.data[val].Record)
           }
           setFetched(true)
@@ -79,11 +79,6 @@ const Products: React.FC = () => {
       hideLoader()
       showToast('Failed while confirm the products','danger')
     })
-
-    // setTimeout(() => {
-    //   hideLoader()
-    //   showToast('Successfully confirm the transaction','success')
-    // }, 3000);
   }
 
   const transferHandler = (id: any) => {
@@ -94,13 +89,20 @@ const Products: React.FC = () => {
     history.push('/page/products/'+id)
   }
 
+  useEffect(() => {
+    for (let index = 0; index < supplyContext.products.length; index++) {
+      setConfirmData([...confirmData, supplyContext.products[index].Confirm])
+    }
+    console.log(confirmData)
+  }, [supplyContext.products])
+
   let layout
   if(supplyContext.products.length === 0){
     layout = <tr>
       <td colSpan={5} className="text-center">No products found</td>
     </tr>
   }else{
-    layout = supplyContext.products.map(d => {
+    layout = supplyContext.products.map((d,idx) => {
       return <tr key={d.ID}>
         <td>{d.Name}</td>
         <td>{d.Location}</td>
@@ -113,7 +115,7 @@ const Products: React.FC = () => {
           <IonButton onClick={() => historyHandler(d.ID)}>
             <IonIcon icon={readerOutline}/>
           </IonButton>
-          {!d.isConfirm ? 
+          {confirmData[idx] == "false" ? 
             <IonButton onClick={() => clickHandler(d.ID!)}>Confirm</IonButton> :
             <IonBadge color="success">
               Confirmed

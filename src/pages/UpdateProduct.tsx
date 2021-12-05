@@ -47,7 +47,7 @@ const UpdateProduct: React.FC = () => {
         'Condition': condition,
         'Location': location,
         'Name' : name,
-        'Confirm': false,
+        'Confirm': "false",
       }
       supplyContext.addProduct(newProd)
       setTimeout(() => {

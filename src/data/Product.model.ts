@@ -5,6 +5,5 @@ export default interface Product {
   Condition?: string
   Location?: string
   Owner?: string
-  isConfirm?: boolean
-  // confirm?: boolean
+  Confirm?: string
 }
